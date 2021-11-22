@@ -1,22 +1,17 @@
 <template>
-  <div>
-    <div class="note-selector" v-for="note in notes" :key="note.id">
-      <p class="note-selector-title">{{ note.title }}</p>
-      <p class="note-selector-timestamp">{{ note.timestamp }}</p>
-    </div>
+  <div v-bind:class="{ active: selectedNoteId === note.id }" v-on:click="selectNote(note)">
+    <p class="note-selector-title">{{ note.body }}</p>
+    <p class="note-selector-timestamp">{{ note.timestamp }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  data: function () {
-    return {
-      notes: [
-        { id: 1, title: "First note...", timestamp: "Timestamp here.." },
-        { id: 2, title: "Second note...", timestamp: "Timestamp here.." },
-        { id: 3, title: "Third note...", timestamp: "Timestamp here.." },
-      ],
-    };
+  props: ["note", "selectedNoteId"],
+  methods: {
+    selectNote: function (note) {
+      this.$emit("selectNote", note);
+    },
   },
 };
 </script>
